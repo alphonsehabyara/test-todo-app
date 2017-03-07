@@ -27,12 +27,12 @@ RSpec.describe Task, type: :model do
     end
   end
    describe '#overdue?' do 
-    it "should false if the deadline didn't pass" do
+    it "should true if the deadline didn't pass" do
       task = Task.new(deadline: Time.now - 1.day)
       expect(task.overdue?).to eq(true)
     end
 
-    it "should true if the deadline passed" do 
+    it "should false if the deadline passed" do 
       task = Task.new(deadline: Time.now + 1.day)
       expect(task.overdue?).to eq(false)
     end
