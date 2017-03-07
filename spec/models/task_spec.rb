@@ -37,25 +37,27 @@ RSpec.describe Task, type: :model do
       expect(task.overdue?).to eq(false)
     end
   end 
-  describe 'increment_priority!' do
-    it 'should return the priority increased by one' do
-      task = Task.new(priority: 15)
+
+  describe '#increment_priority!' do 
+    it 'should return plus on if less than 10' do 
+      task = Task.create(priority: 8)
       task.increment_priority!
-      expect(task.priority).to eq(16)
+      expect(task.priority).to eq(9)
+    end
+
+     it 'shouldn\'t increment above 10' do 
+      task = Task.create(priority: 10)
+      task.increment_priority!
+      expect(task.priority).to eq(10)
     end
   end
-  describe 'decrement_priority!' do
-    it 'should return the priority increased by one' do
-      task = Task.new(priority: 15)
-      task.decrement_priority!
-      expect(task.priority).to eq(14)
-    end
-  end
+  
   describe 'snooze_hour!' do
-    it 'should deadline plus one hour' do
-      task = Task.new(deadline: Time.now )
+    it 'should return one hour ahead of the deadline' do
+      deadline = DateTime.new(2017, 3, 7)
+      task = Task.create(deadline: deadline)
       task.snooze_hour!
-      expect(task.deadline).to eq(Time.now)
+      expect(task.deadline).to eq(deadline + 1.hour)
     end
   end
 end
